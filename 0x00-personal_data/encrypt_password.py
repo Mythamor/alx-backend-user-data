@@ -5,10 +5,9 @@ Module: encrypt_password.py
 """
 
 import bcrypt
-from typing import ByteString
 
 
-def hash_password(password: str) -> ByteString:
+def hash_password(password: str) -> bytes:
     """
     Hashes a password with bcrypt
     """
