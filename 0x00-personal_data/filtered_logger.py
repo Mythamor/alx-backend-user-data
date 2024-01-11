@@ -9,6 +9,10 @@ import re
 from typing import List
 
 
+# PII fields to be obscured
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
+
 def filter_datum(fields: List[str], redaction: str, message: str,
                  separator: str) -> str:
     """
@@ -18,6 +22,25 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         message = re.sub(f'{field}=.*?{separator}',
                          f'{field}={redaction}{separator}', message)
     return message
+
+
+def get_logger() -> logging.Logger:
+    """
+    takes no arguments and returns a
+    logging.Logger object named user_data.
+    Only log up to logging.INFO level
+    Propagate messages = False
+    Use StreamHandler with RedactingFormatter
+    """
+    logger = logging.getLogger("user_data")
+    logger.setLeve(logging.INFO)
+    logger.propagate = False
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
+    logger.addHandler(stream_handler)
+
+    return logger
 
 
 class RedactingFormatter(logging.Formatter):
