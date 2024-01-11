@@ -5,7 +5,7 @@ Module: filtered_logger.py
 """
 
 import re
-from typinf import List
+from typing import List
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
