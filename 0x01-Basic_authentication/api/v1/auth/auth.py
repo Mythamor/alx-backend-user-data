@@ -20,7 +20,18 @@ class Auth:
         """
         Checks if auth is required in given path
         """
-        return False
+        if path is None:
+            return True
+
+        if excluded_paths is None or not excluded_paths:
+            return True
+
+        # Ensure slash tolerance
+        path_with_slash = path if path.endswith('/') else path + '/'
+        epath_with_slash = [p if p.endswith('/') else p + '/'
+                            for p in excluded_paths]
+
+        return path_with_slash not in epath_with_slash
 
     def authorization_header(self, request=None) -> str:
         """
