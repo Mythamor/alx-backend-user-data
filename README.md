@@ -5,6 +5,7 @@
 
 ## Projects
 1. 0x00. Personal data
+2. 0x01-Basic_authentication
 
 
 ## Requirements
