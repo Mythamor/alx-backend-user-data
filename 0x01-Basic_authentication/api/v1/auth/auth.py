@@ -30,14 +30,16 @@ class Auth:
         """
         # Ensure slash tolerance
         path_with_slash = path if path.endswith('/') else path + '/'
-        epath_with_slash = [p if p.endswith('/') else p + '/'
+        epath_with_slash = [p if p.endswith('/') else p + '/' or p + '*'
                             for p in excluded_paths]
 
         return path_with_slash not in epath_with_slash
         """
+
         for ex_path in excluded_paths:
-            if fnmatch.fnmatch(path, excluded_path):
+            if fnmatch.fnmatch(path, ex_path):
                 return False
+            return True
 
     def authorization_header(self, request=None) -> str:
         """
