@@ -24,8 +24,11 @@ if auth:
 
 @app.before_request
 def before_request():
-    
-    routes_list =  ['/api/v1/status/', '/api/v1/unauthorized/', 
+    """
+    Filters each request
+    """
+
+    routes_list = ['/api/v1/status/', '/api/v1/unauthorized/',
                    '/api/v1/forbidden/']
 
     if auth is None:
