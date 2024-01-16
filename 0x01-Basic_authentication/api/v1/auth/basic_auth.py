@@ -57,7 +57,16 @@ class BasicAuth(Auth):
                 ':' not in decoded_base64_authorization_header:
             return None, None
 
-        user, password = decoded_base64_authorization_header.split(':')
+        credentials = decoded_base64_authorization_header
+
+        # Split credentials on first colon only
+        col_index = credentials.find(':')
+        if col_index == -1:
+            return None
+
+        user = credentials[:col_index]
+        password = credentials[col_index + 1:]
+
         return user, password
 
     def user_object_from_credentials(

@@ -6,6 +6,7 @@ Module: auth.py
 
 from flask import request
 from typing import List, TypeVar
+import fnmatch
 
 
 class Auth:
@@ -26,12 +27,17 @@ class Auth:
         if excluded_paths is None or not excluded_paths:
             return True
 
+        """
         # Ensure slash tolerance
         path_with_slash = path if path.endswith('/') else path + '/'
         epath_with_slash = [p if p.endswith('/') else p + '/'
                             for p in excluded_paths]
 
         return path_with_slash not in epath_with_slash
+        """
+        for ex_path in excluded_paths:
+            if fnmatch.fnmatch(path, excluded_path):
+                return False
 
     def authorization_header(self, request=None) -> str:
         """
