@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """
 Module: session_auth.py
     Authenticates the session
