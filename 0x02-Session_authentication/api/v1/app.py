@@ -37,7 +37,7 @@ def before_request():
         pass
     else:
         setattr(request, "current_user", auth.current_user(request))
-    
+
         if auth.require_auth(request.path, routes_list):
             pass
             if auth.authorization_header(request) is None:
