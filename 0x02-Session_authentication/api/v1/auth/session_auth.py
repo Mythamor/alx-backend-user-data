@@ -19,7 +19,8 @@ Module: session_auth.py
     - destroy_session(self, request=None): Destroys the current session.
 """
 
-from api.v1.auth.auth import Auth
+from .auth import Auth
+from models.user import User
 
 
 class SessionAuth(Auth):
