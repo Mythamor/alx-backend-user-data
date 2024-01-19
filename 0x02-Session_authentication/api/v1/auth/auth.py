@@ -37,9 +37,15 @@ class Auth:
         """
 
         for ex_path in excluded_paths:
-            if fnmatch.fnmatch(path, ex_path):
+            if ex_path.startswith(path):
                 return False
-            return True
+            elif path.startswith(ex_path):
+                return False
+            elif ex_path[-1] == "*":
+                if path.startswith(ex_path[:-1]):
+                    return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
