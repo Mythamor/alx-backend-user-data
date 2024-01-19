@@ -10,7 +10,7 @@ Module: session_auth.py
 """
 
 
-from api.v1.auth.auth import Auth
+from .auth import Auth
 from models.user import User
 
 
