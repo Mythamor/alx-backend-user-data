@@ -38,7 +38,7 @@ def before_request():
 
     if auth is None:
         return
-    
+
     setattr(request, "current_user", auth.current_user(request))
 
     if request.path not in routes_list and not\
