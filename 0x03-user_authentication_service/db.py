@@ -6,6 +6,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
+
+from typing import Any, Dict, Union
 
 from user import Base, User
 
@@ -35,6 +39,7 @@ class DB:
         """
         Adds and saves a user to the db
         """
+        # Set up session
         session = self._session
 
         # Create instance of new user
@@ -47,3 +52,21 @@ class DB:
         session.commit()
 
         return user
+
+    def find_user_by(self, **kwargs: Any) -> Union[User, None]:
+        """
+        Takes in arbitrary keyword arguments
+        Returns the first row found in the users table as filtered by
+        the method’s input arguments.
+        """
+        # Set up session
+        session = self._session
+
+        # Filter
+        try:
+            result = session.query(User).filter_by(**kwargs).first()
+            if result is None:
+                raise NoResultFound
+            return result
+        except AttributeError:
+            raise InvalidRequestError
