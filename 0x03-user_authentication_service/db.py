@@ -65,11 +65,11 @@ class DB:
         # Filter
         try:
             result = session.query(User).filter_by(**kwargs).first()
-            if result is None or not result:
+            if result is None:
                 raise NoResultFound
             return result
-        except AttributeError:
-            raise InvalidRequestError
+        except (NoResultFound, InvalidRequestError) as e:
+            raise e
 
     def update_user(self, user_id: int, **kwargs: Any) -> None:
         """
