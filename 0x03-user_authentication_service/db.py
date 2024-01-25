@@ -35,17 +35,15 @@ class DB:
         """
         Adds and saves a user to the db
         """
-        if self.__session is None:
-            DBSession = sessionmaker(bind=self._engine)
-            self.__session = DBSession()
+        session = self._session
 
         # Create instance of new user
         user = User(email=email, hashed_password=hashed_password)
 
         # Add user to session
-        self.__session.add(user)
+        session.add(user)
 
         # Commit session to save user to db
-        self.__session.commit()
+        session.commit()
 
         return user
