@@ -70,7 +70,7 @@ class Auth:
         # Check if passwords match
         return bcrypt.checkpw(e_password, hashed_pass)
 
-    def _generate_uuid(self) -> str:
+    def _generate_uuid() -> str:
         """
         Private method
         Returns a string repe of a new UUID
