@@ -4,7 +4,7 @@
 Module: app.py
 """
 
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
 
 
@@ -59,6 +59,27 @@ def login():
 
     # If auth fails/ login info is incorrect, abort with 401
     abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"])
+def logout():
+    """
+    Deletes and logs out of the session
+    """
+    # Extract session ID from cookie
+    session_id = request.cookies.get('session_id')
+
+    # Find user with session ID
+    user = auth.get_user_from_session_id(session_id)
+
+    if user is not None:
+        # Destroy session and redirect to /
+        response = redirect('/')
+        response.delete_cookie('session_id')
+        return response
+    else:
+        # I f user does not exist abort 403
+        abort(403)
 
 
 if __name__ == "__main__":
