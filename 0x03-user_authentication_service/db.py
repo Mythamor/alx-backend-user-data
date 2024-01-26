@@ -90,3 +90,10 @@ class DB:
 
         session.commit()
         return None
+
+    def commit(self) -> None:
+        """
+        Commits changes to the database
+        """
+        session = self._session
+        session.commit()
