@@ -96,4 +96,4 @@ class Auth:
         # Update user session ID in the database
         self._db.update_user(user.id, session_id=session_id)
 
-        return session_id
+        return user.session_id
