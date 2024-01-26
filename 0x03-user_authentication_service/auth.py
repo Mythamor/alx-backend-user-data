@@ -91,15 +91,16 @@ class Auth:
             return None
 
         # If user exists, generate new uuid
-        session_id = _generate_uuid()
+        else:
+            user.session_id = _generate_uuid()
 
         # Update user session ID in the database
-        self._db.update_user(user.id, session_id=session_id)
-        self._db.commit()
+        # self._db.update_user(user.id, session_id=session_id)
+        # self._db.commit()
 
-        return user.session_id
+            return user.session_id
 
-    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
+    def get_user_from_session_id(self, session_id: str) -> User:
         """
         Get the user from the session id
         """
@@ -107,6 +108,7 @@ class Auth:
             return None
         try:
             user = self._db.find_user_by(session_id=session_id)
-            return user
         except NoResultFound:
             return None
+        else:
+            return user
