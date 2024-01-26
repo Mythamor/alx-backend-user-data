@@ -4,7 +4,7 @@
 Module: app.py
 """
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort, make_response
 from auth import Auth
 
 
@@ -34,6 +34,31 @@ def register_user():
     # Raise error if user already registered
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
+
+
+@app.route("/sessions", methods=["POST"])
+def login():
+    """
+    Handles login requests
+    """
+    # Get form data
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    # Authenticate user
+    if AUTH.valid_login(email, password):
+        # Create a new session id
+        session_id = AUTH.create_session(email)
+
+        # Set the sessio ID as a cookie in the response
+        response = make_response(jsonify({f"email": "{email}",
+                                         "message": "logged in"}))
+        response.set_cookie('session_id', session_id)
+
+        return response
+
+    # If auth fails/ login info is incorrect, abort with 401
+    abort(401)
 
 
 if __name__ == "__main__":
