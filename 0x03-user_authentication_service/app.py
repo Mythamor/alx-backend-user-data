@@ -70,7 +70,7 @@ def logout():
     session_id = request.cookies.get('session_id')
 
     # Find user with session ID
-    user = auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
 
     if user is not None:
         # Destroy session and redirect to /
@@ -78,7 +78,7 @@ def logout():
         response.delete_cookie('session_id')
         return response
     else:
-        # I f user does not exist abort 403
+        # If user does not exist abort 403
         abort(403)
 
 
