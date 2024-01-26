@@ -53,7 +53,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs: Any) -> Union[User, None]:
+    def find_user_by(self, **kwargs: Any) -> User:
         """
         Takes in arbitrary keyword arguments
         Returns the first row found in the users table as filtered by
