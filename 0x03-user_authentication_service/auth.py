@@ -112,3 +112,10 @@ class Auth:
             return None
         else:
             return user
+
+    def destroy_session(self, user_id: int) -> None:
+        """
+        Destroys the user session
+        """
+        self._db.update_user(user_id)
+        return None
