@@ -98,3 +98,12 @@ class Auth:
         self._db.commit()
 
         return user.session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User, None:
+        """
+        Get the user from the session id
+        """
+        user = self._db.find_user_by(session_id)
+        if not user or session_id is None:
+            return None
+        return user
