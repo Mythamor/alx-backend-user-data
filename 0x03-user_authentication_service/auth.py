@@ -117,6 +117,10 @@ class Auth:
         """
         Destroys the user session
         """
-        user = self._db.find_user_by(id=user_id)
-        user.session_id = None
-        return None
+        try:
+            user = self._db.find_user_by(id=user_id)
+        except NoResultFound:
+            return None
+        else:
+            user.session_id = None
+            return None
