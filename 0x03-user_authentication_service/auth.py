@@ -19,6 +19,15 @@ def _hash_password(password: str) -> bytes:
     return hashed_pass
 
 
+def _generate_uuid() -> str:
+    """
+    Private method
+    Returns a string repe of a new UUID
+    """
+    new_uuid = uuid.uuid4()
+    return str(new_uuid)
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -69,11 +78,3 @@ class Auth:
 
         # Check if passwords match
         return bcrypt.checkpw(e_password, hashed_pass)
-
-    def _generate_uuid() -> str:
-        """
-        Private method
-        Returns a string repe of a new UUID
-        """
-        new_uuid = uuid.uuid4()
-        return str(new_uuid)
