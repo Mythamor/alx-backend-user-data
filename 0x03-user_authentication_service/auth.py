@@ -103,7 +103,10 @@ class Auth:
         """
         Get the user from the session id
         """
-        user = self._db.find_user_by(session_id=session_id)
-        if not user or session_id is None:
+        if session_id is None:
             return None
-        return user
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except NoResultFound:
+            return None
