@@ -53,7 +53,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs: Any) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """
         Takes in arbitrary keyword arguments
         Returns the first row found in the users table as filtered by
@@ -71,7 +71,7 @@ class DB:
         except (NoResultFound, InvalidRequestError) as e:
             raise e
 
-    def update_user(self, user_id: int, **kwargs: Any) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
         Use find_user_by to locate the user to update,
         update the user’s attributes as passed in the method’s args
