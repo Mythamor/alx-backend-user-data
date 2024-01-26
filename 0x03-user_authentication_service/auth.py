@@ -89,11 +89,12 @@ class Auth:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
             return None
+        
+        else:
+            # If user exists, generate new uuid
+            user.session_id = _generate_uuid()
 
-        # If user exists, generate new uuid
-        user.session_id = _generate_uuid()
+            # Update user session ID in the database
+            #self._db.update_user(user.id, session_id=session_id)
 
-        # Update user session ID in the database
-        #self._db.update_user(user.id, session_id=session_id)
-
-        return user.session_id
+            return user.session_id
